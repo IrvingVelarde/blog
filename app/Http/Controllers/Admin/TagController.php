@@ -21,7 +21,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::orderBy('id','DESC')->paginate(3);
+        $tags = Tag::orderBy('id','DESC')->paginate(5);
         //dd($tags);
         return view('admin.tags.index',compact('tags'));
         //return 'hola este es el index';
@@ -86,7 +86,7 @@ class TagController extends Controller
      */
     public function update(TagUpdateRequest $request, $id)
     {
-        $tag = Tag::find($id);
+        $tag = Tag::findOrFail($id);
         $tag->fill($request->all)->save();
         return redirect()->route('tags.edit',$tag->id)->with('info','Etiqueta Actualizada con exito ...');
         
@@ -100,7 +100,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $tag = Tag::find($id)->delete();
+        $tag = Tag::findOrFail($id)->delete();
         return back()->with('info','Eliminado Correctamente');
     }
 }
