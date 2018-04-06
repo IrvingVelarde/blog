@@ -12,7 +12,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('bootstrap-4.0.0/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('fontawesome-5.0.9/web-fonts-with-css/css/fontawesome-all.css') }}" rel="stylesheet">
 </head>
