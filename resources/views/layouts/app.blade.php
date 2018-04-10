@@ -75,7 +75,8 @@
                 </div>
             </div>
         </nav>
-
+        @include('alerts.alerts')
+        @include('errors.errors')
         @yield('content')
     </div>
 
@@ -83,5 +84,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('bootstrap-4.0.0/js/bootstrap.js') }}"></script>
     <script src="{{ asset('jquery/jquery-3.3.1.js') }}"></script>
+    @yield('scripts')
+
 </body>
 </html>
