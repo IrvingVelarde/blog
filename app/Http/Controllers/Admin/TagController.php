@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requets\TagStoreRequest;
-use App\Http\Requets\TagUpdateRequest;
+use App\Http\Requests\TagStoreRequest;
+use App\Http\Requests\TagUpdateRequest;
+use Redirect;
+use Session;
 use App\Http\Controllers\Controller;
 use App\Tag;
 
@@ -47,9 +49,12 @@ class TagController extends Controller
     {
         // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
         $tag = Tag::create($request->all());
+        $tag->save();
         //return view('admin.tags.index');
         // return redirect()->route('tags.index');
-        return redirect()->route('tags.edit',$tag->id)->with('info','Etiqueta Creada con exito ...');
+        Session::flash('create',"Se ha registrado el Tag ". $tag->name ." de forma exitosa!");
+        return Redirect::route('tags.index');
+        //return redirect()->route('tags.index')->with('info','Etiqueta Creada con exito ...');
         
     }
 
@@ -83,12 +88,14 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
+     */                  
     public function update(TagUpdateRequest $request, $id)
     {
-        $tag = Tag::findOrFail($id);
-        $tag->fill($request->all)->save();
-        return redirect()->route('tags.edit',$tag->id)->with('info','Etiqueta Actualizada con exito ...');
+        $tag = Tag::find($id);
+        $tag->fill($request->all())->save();
+        Session::flash('edit',"Se ha actualizado el Tag ". $tag->name ." de forma exitosa!");
+        return Redirect::route('tags.index');
+        //return redirect()->route('tags.edit',$tag->id)->with('edit','Etiqueta Actualizada con exito ...');
         
     }
 
@@ -100,7 +107,10 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $tag = Tag::findOrFail($id)->delete();
-        return back()->with('info','Eliminado Correctamente');
+        $tag = Tag::findOrFail($id);
+        $tag->delete();
+        Session::flash('delete',"Se ha eliminado el Tag ". $tag->name ." de forma exitosa!");
+        return Redirect::route('tags.index');
+        //return back()->with('info','Eliminado Correctamente');
     }
 }

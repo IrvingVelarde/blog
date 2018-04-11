@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
+use Redirect;
+use Session;
 use App\Http\Controllers\Controller;
+use App\Category;
 
 class CategoryController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::orderBy('id','DESC')->paginate(5);
+        //dd(categories);
+        return view('admin.categories.index',compact('categories'));
+        //return 'hola este es el index';
     }
 
     /**
@@ -24,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -33,9 +44,13 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreRequest $request)
     {
-        //
+        // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
+        $categories = Category::create($request->all());
+        $categories->save();
+        Session::flash('create',"Se ha registrado el Category ". $categories->name ." de forma exitosa!");
+        return Redirect::route('categories.index');
     }
 
     /**
@@ -46,7 +61,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = Category::find($id);
+        return view('admin.categories.show',compact('categories'));
     }
 
     /**
@@ -57,7 +73,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::find($id);
+        return view('admin.categories.edit',compact('categories'));
     }
 
     /**
@@ -67,9 +84,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        //
+        $categories = Category::find($id);
+        $categories->fill($request->all())->save();
+        Session::flash('edit',"Se ha actualizado la Categoria ". $categories->name ." de forma exitosa!");
+        return Redirect::route('categories.index');
     }
 
     /**
@@ -80,6 +100,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categories = Category::findOrFail($id);
+        $categories->delete();
+        Session::flash('delete',"Se ha eliminado la Categoria ". $categories->name ." de forma exitosa!");
+        return Redirect::route('categories.index');
     }
 }
