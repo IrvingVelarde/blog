@@ -3,10 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
+use Redirect;
+use Session;
 use App\Http\Controllers\Controller;
+use App\Post;
+use App\Tag;
+use App\Category;
 
 class PostController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return "HOLA ESTE ES EL POST";
+        $posts = Post::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(5);
+        return view('admin.posts.index',compact('posts'));
     }
 
     /**
@@ -24,7 +35,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::orderBy('name','ASC')->pluck('name','id');
+        $tags = Tag::orderBy('name','ASC')->get();
+        return view('admin.posts.create',compact('categories','tags'));
     }
 
     /**
@@ -33,9 +46,13 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        //
+        // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
+        $posts = Post::create($request->all());
+        $posts->save();
+        Session::flash('create',"Se ha registrado el Post ". $posts->name ." de forma exitosa!");
+        return Redirect::route('posts.index');
     }
 
     /**
@@ -46,7 +63,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $posts = Post::find($id);
+        return view('admin.posts.show',compact('posts'));
     }
 
     /**
@@ -57,7 +75,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::orderBy('name','ASC')->pluck('name','id');
+        $tags = Tag::orderBy('name','ASC')->get();
+        $posts = Post::find($id);
+        return view('admin.posts.edit',compact('posts','categories','tags'));
     }
 
     /**
@@ -67,9 +88,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, $id)
     {
-        //
+        $posts = Post::find($id);
+        $posts->fill($request->all())->save();
+        Session::flash('edit',"Se ha actualizado la Post ". $posts->name ." de forma exitosa!");
+        return Redirect::route('posts.index');
     }
 
     /**
@@ -80,6 +104,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $posts = Post::findOrFail($id);
+        $posts->delete();
+        Session::flash('delete',"Se ha eliminado la Post ". $posts->name ." de forma exitosa!");
+        return Redirect::route('posts.index');
     }
 }
