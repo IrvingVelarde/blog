@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::model($posts, ['route' => ['posts.update', $posts->id], 'method' => 'PUT']) !!}
+                    {!! Form::model($posts, ['route' => ['posts.update', $posts->id], 'method' => 'PUT','files' => true]) !!}
                         
                         @include('admin.posts.partials.form')
 

@@ -7,6 +7,7 @@ use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
 use Redirect;
 use Session;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
@@ -50,7 +51,14 @@ class PostController extends Controller
     {
         // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
         $posts = Post::create($request->all());
-        $posts->save();
+        //IMAGE 
+        if($request->file('file')){
+            $path = Storage::disk('public')->put('image',  $request->file('file'));
+            $posts->fill(['file' => asset($path)])->save();
+        }
+        //TAGS
+        $posts->tags()->attach($request->get('tags'));
+        //$posts->save();
         Session::flash('create',"Se ha registrado el Post ". $posts->name ." de forma exitosa!");
         return Redirect::route('posts.index');
     }
@@ -92,6 +100,13 @@ class PostController extends Controller
     {
         $posts = Post::find($id);
         $posts->fill($request->all())->save();
+        //IMAGE 
+        if($request->file('image')){
+            $path = Storage::disk('public')->put('image',  $request->file('image'));
+            $posts->fill(['file' => asset($path)])->save();
+        }
+        //TAGS
+        $posts->tags()->sync($request->get('tags'));
         Session::flash('edit',"Se ha actualizado la Post ". $posts->name ." de forma exitosa!");
         return Redirect::route('posts.index');
     }

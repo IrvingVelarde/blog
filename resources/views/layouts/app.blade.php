@@ -14,6 +14,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('fontawesome-5.0.9/web-fonts-with-css/css/fontawesome-all.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -85,6 +86,5 @@
     <script src="{{ asset('bootstrap-4.0.0/js/bootstrap.js') }}"></script>
     <script src="{{ asset('jquery/jquery-3.3.1.js') }}"></script>
     @yield('scripts')
-
 </body>
 </html>
