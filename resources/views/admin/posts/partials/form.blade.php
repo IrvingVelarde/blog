@@ -38,7 +38,7 @@
 <div class="form-group">
 		{{ Form::label('excerpt', 'Extracto') }}
 		{{ Form::textarea('excerpt', null, ['class' => 'form-control', 'rows' => '2']) }}
-	</div>
+</div>
 <div class="form-group">
     {{ Form::label('body', 'Descripción') }}
     {{ Form::textarea('body', null, ['class' => 'form-control']) }}
@@ -47,18 +47,16 @@
     {{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-primary']) }}
 </div>
 @section('scripts')
-<script src="{{ asset('vendor/stringToSlug/jquery.stringToSlug.min.js') }}"></script>
-<script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
-<script>
-	$(document).ready(function(){
-	    $("#name, #slug").stringToSlug({
-	        callback: function(text){
-	            $('#slug').val(text);
-	        }
+	<script>
+		$(document).ready(function(){
+			$("#name, #slug").stringToSlug({
+				callback: function(text){
+					$('#slug').val(text);
+				}
+			});
+			CKEDITOR.config.height = 400;
+			CKEDITOR.config.width = 'auto';
+			CKEDITOR.replace('body');
 		});
-		CKEDITOR.config.height = 400;
-		CKEDITOR.config.width = 'auto';
-		CKEDITOR.replace('body');
-	});
-</script>
+	</script>
 @endsection()

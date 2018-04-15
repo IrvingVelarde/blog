@@ -10,7 +10,6 @@
                 </div>
                 <div class="panel-body">
                     {{--<table class="table table-striped table-hover"> --}}
-                    {{--<table class="table table-striped table-hover"> --}}
                     <a href="{{ route('posts.create') }}" class="btn btn-primary"> <span class="fas fa-plus-square" aria-hidden="true"></span> Agregar Categoria</a>
                     <p>
                     <table class="table table-bordered table-hover">

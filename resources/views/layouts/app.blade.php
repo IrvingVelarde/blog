@@ -10,9 +10,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
+    <!-- Styles --> 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('chosen/chosen.css') }}">
     <link href="{{ asset('fontawesome-5.0.9/web-fonts-with-css/css/fontawesome-all.css') }}" rel="stylesheet">
 
 </head>
@@ -85,6 +86,9 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('bootstrap-4.0.0/js/bootstrap.js') }}"></script>
     <script src="{{ asset('jquery/jquery-3.3.1.js') }}"></script>
+    <script src="{{ asset('vendor/stringToSlug/jquery.stringToSlug.min.js') }}"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('chosen/chosen.jquery.js') }}"></script>
     @yield('scripts')
 </body>
 </html>
