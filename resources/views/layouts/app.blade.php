@@ -90,5 +90,6 @@
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('chosen/chosen.jquery.js') }}"></script>
     @yield('scripts')
+    //@yield('js')
 </body>
 </html>

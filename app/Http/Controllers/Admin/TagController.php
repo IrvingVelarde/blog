@@ -10,7 +10,6 @@ use Session;
 use App\Http\Controllers\Controller;
 use App\Tag;
 
-
 class TagController extends Controller
 {
     public function __construct(){
@@ -26,7 +25,7 @@ class TagController extends Controller
         $tags = Tag::orderBy('id','DESC')->paginate(5);
         //dd($tags);
         return view('admin.tags.index',compact('tags'));
-        //return 'hola este es el index';
+        //return 'hola este es el index de las Etiquetas';
     }
 
     /**
@@ -52,8 +51,10 @@ class TagController extends Controller
         $tag->save();
         //return view('admin.tags.index');
         // return redirect()->route('tags.index');
-        Session::flash('create',"Se ha registrado el Tag ". $tag->name ." de forma exitosa!");
+        ///return Redirect::route('tags.index');
+        Session::flash('create',"Se ha registrado la Etiqueta ". $tag->name ." de forma exitosa!");
         return Redirect::route('tags.index');
+        ////return redirect()->route('tags.index', $tag->id)->with('create', 'Etiqueta creada con éxito');
         //return redirect()->route('tags.index')->with('info','Etiqueta Creada con exito ...');
         
     }
@@ -79,7 +80,7 @@ class TagController extends Controller
     public function edit($id)
     {
         $tag = Tag::find($id);
-        return view('admin.tags.edit',compact('tag'));
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -93,10 +94,10 @@ class TagController extends Controller
     {
         $tag = Tag::find($id);
         $tag->fill($request->all())->save();
-        Session::flash('edit',"Se ha actualizado el Tag ". $tag->name ." de forma exitosa!");
+        //return redirect()->route('tags.index')->with('edit', 'Etiqueta actualizada con éxito');
+        //return redirect()->route('tags.edit', $tag->id)->with('edit', 'Etiqueta actualizada con éxito');
+        Session::flash('edit',"Se ha actualizado la Etiqueta ". $tag->name ." de forma exitosa!");
         return Redirect::route('tags.index');
-        //return redirect()->route('tags.edit',$tag->id)->with('edit','Etiqueta Actualizada con exito ...');
-        
     }
 
     /**
@@ -109,7 +110,7 @@ class TagController extends Controller
     {
         $tag = Tag::findOrFail($id);
         $tag->delete();
-        Session::flash('delete',"Se ha eliminado el Tag ". $tag->name ." de forma exitosa!");
+        Session::flash('delete',"Se ha eliminado la Etiqueta ". $tag->name ." de forma exitosa!");
         return Redirect::route('tags.index');
         //return back()->with('info','Eliminado Correctamente');
     }

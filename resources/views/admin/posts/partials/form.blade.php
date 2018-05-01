@@ -60,3 +60,16 @@
 		});
 	</script>
 @endsection()
+
+
+{{--
+	@section('js')
+<script>
+	$('.select-category').chosen({
+		placeholder_text_single:'Seleccione una Categoria'
+	});
+	
+	$('.textarea-content').trumbowyg();
+</script>
+@endsection
+--}}

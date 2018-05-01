@@ -25,7 +25,7 @@ class CategoryController extends Controller
         $categories = Category::orderBy('id','DESC')->paginate(5);
         //dd(categories);
         return view('admin.categories.index',compact('categories'));
-        //return 'hola este es el index';
+        //return 'hola este es el index de categoria';
     }
 
     /**
@@ -49,7 +49,7 @@ class CategoryController extends Controller
         // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
         $categories = Category::create($request->all());
         $categories->save();
-        Session::flash('create',"Se ha registrado el Category ". $categories->name ." de forma exitosa!");
+        Session::flash('create',"Se ha registrado la Categoria ". $categories->name ." de forma exitosa!");
         return Redirect::route('categories.index');
     }
 

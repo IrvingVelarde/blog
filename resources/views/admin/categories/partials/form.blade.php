@@ -12,6 +12,7 @@
 </div>
 <div class="form-group">
     {{ Form::submit('Guardar', ['class' => 'btn btn-sm btn-primary']) }}
+    <a href="{{URL::to('/categories')}}" class="btn btn-sm btn-danger">Cancelar</a>
 </div>
 @section('scripts')
 <script src="{{ asset('vendor/stringToSlug/jquery.stringToSlug.min.js') }}"></script>
