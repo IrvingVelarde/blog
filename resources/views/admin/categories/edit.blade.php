@@ -9,7 +9,6 @@
                         echo "Editar Categoria: ".  "<b>" .$categories->name. "</b>";
                     ?>    
                 </div>
-
                 <div class="panel-body">
                     {!! Form::model($categories, ['route' => ['categories.update', $categories->id], 'method' => 'PUT']) !!}
                         

@@ -6,20 +6,18 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Lista de Entradas 
-                    <a href="{{ route('posts.create') }}" class="pull-right btn btn-sm btn-primary">
-                        Crear
-                    </a>
+                    Lista de Posts 
                 </div>
-
                 <div class="panel-body">
-
-                    <table class="table table-striped table-hover">
+                    {{--<table class="table table-striped table-hover"> --}}
+                    <a href="{{ route('posts.create') }}" class="btn btn-primary"> <span class="fas fa-plus-square" aria-hidden="true"></span> Agregar Categoria</a>
+                    <p>
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th width="10px">ID</th>
                                 <th>Nombre</th>
-                                <th colspan="3">&nbsp;</th>
+                                <th colspan="3">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,27 +26,26 @@
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->name }}</td>
                                 <td width="10px">
-                                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-default">Ver</a>
+                                    <a href="{{ route('posts.show',$post->id) }}" class="btn btn-info"><span class="fas fa-eye" aria-hidden="true"></span> Ver</a>
                                 </td>
                                 <td width="10px">
-                                    <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-default">Editar</a>
+                                    <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-warning"><span class="fas fa-edit" aria-hidden="true"></span> Editar</a>
                                 </td>
                                 <td width="10px">
-                                    {!! Form::open(['route' => ['posts.destroy', $post->id], 'method' => 'DELETE']) !!}
-                                        <button class="btn btn-sm btn-danger">
-                                            Eliminar
-                                        </button>                           
+                                    {!!Form::open(['route'=>['posts.destroy', $post->id], 'method' => 'DELETE'])!!}
+                                    <button class="btn btn-danger"> <span class="fas fa-trash" aria-hidden="true"></span> 
+                                        Eliminar
+                                    </button>
                                     {!! Form::close() !!}
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>   
                     </table>     	
-
                     {{ $posts->render() }}
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
+@endsection()

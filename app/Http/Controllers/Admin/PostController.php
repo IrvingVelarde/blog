@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
@@ -52,16 +51,16 @@ class PostController extends Controller
     public function store(PostStoreRequest $request)
     {
         // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
-        $posts = Post::create($request->all());
+        $post = Post::create($request->all());
         //IMAGE 
         if($request->file('file')){
             $path = Storage::disk('public')->put('image',  $request->file('file'));
-            $posts->fill(['file' => asset($path)])->save();
+            $post->fill(['file' => asset($path)])->save();
         }
         //TAGS
-        $posts->tags()->attach($request->get('tags'));
-        //$posts->save();
-        Session::flash('create',"Se ha registrado el Post ". $posts->name ." de forma exitosa!");
+        $post->tags()->attach($request->get('tags'));
+        
+        Session::flash('create',"Se ha registrado el Post ". $post->name ." de forma exitosa!");
         return Redirect::route('posts.index');
     }
 
@@ -73,8 +72,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $posts = Post::find($id);
-        return view('admin.posts.show',compact('posts'));
+        $post = Post::find($id);
+        return view('admin.posts.show',compact('post'));
     }
 
     /**
@@ -85,10 +84,18 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::orderBy('name','ASC')->pluck('name','id');
+        /* $categories = Category::orderBy('name','ASC')->pluck('name','id');
         $tags = Tag::orderBy('name','ASC')->get();
         $posts = Post::find($id);
-        return view('admin.posts.edit',compact('posts','categories','tags'));
+        return view('admin.posts.edit',compact('posts','categories','tags')); */
+
+        $categories = Category::orderBy('name', 'ASC')->pluck('name', 'id');
+        $tags       = Tag::orderBy('name', 'ASC')->get();
+        $post       = Post::find($id);
+        //$this->authorize('pass', $post);
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+
     }
 
     /**
@@ -100,17 +107,16 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request, $id)
     {
-        $posts = Post::find($id);
-        $posts->fill($request->all())->save();
-        //IMAGE 
-        if($request->file('image')){
-            $path = Storage::disk('public')->put('image',  $request->file('image'));
-            $posts->fill(['file' => asset($path)])->save();
+        $post = Post::find($id);
+        $post->fill($request->all())->save();
+
+        if($request->file('file')){
+            $path = Storage::disk('public')->put('image',  $request->file('file'));
+            $post->fill(['file' => asset($path)])->save();
         }
         //TAGS
-        $posts->tags()->sync($request->get('tags'));
-        Session::flash('edit',"Se ha actualizado la Post ". $posts->name ." de forma exitosa!");
-        return Redirect::route('posts.index');
+        $post->tags()->sync($request->get('tags'));
+        return redirect()->route('posts.index', $post->id)->with('edit', 'Entrada actualizada con éxito');
     }
 
     /**
