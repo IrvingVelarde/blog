@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'DESC')->where('user_id', auth()->user()->id)->paginate();
+        $posts = Post::orderBy('id', 'DESC')->where('user_id', auth()->user()->id)->paginate(5);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -60,6 +60,7 @@ class PostController extends Controller
     {
         // Para guardar datos masivos y la otra forma seria asignar en una variable uno a uno y despues guardarlo
         $post = Post::create($request->all());
+        $this->authorize('pass', $post);
         //IMAGE 
         if($request->file('image')){
             $path = Storage::disk('public')->put('image',  $request->file('image'));
@@ -81,6 +82,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        $this->authorize('pass', $post);
         return view('admin.posts.show', compact('post'));
     }
 
@@ -92,9 +94,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $post       = Post::find($id);
+        $this->authorize('pass', $post);
         $categories = Category::orderBy('name', 'ASC')->pluck('name', 'id');
         $tags       = Tag::orderBy('name', 'ASC')->get();
-        $post       = Post::find($id);
         return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
@@ -108,6 +111,7 @@ class PostController extends Controller
     public function update(PostUpdateRequest $request, $id)
     {
         $post = Post::find($id);
+        $this->authorize('pass', $post);
         $post->fill($request->all())->save();
         //IMAGE 
         if($request->file('image')){
@@ -129,6 +133,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+        $this->authorize('pass', $post);
         $post->delete();
         Session::flash('delete',"Se ha eliminado la Post ". $post->name ." de forma exitosa!");
         return Redirect::route('posts.index');
