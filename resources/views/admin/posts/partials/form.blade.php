@@ -2,7 +2,7 @@
 
 <div class="form-group">
 	{{ Form::label('category_id', 'Categorías') }}
-	{{ Form::select('category_id', $categories, null, ['class' => 'form-control']) }}
+	{{ Form::select('category_id', $categories, null, ['class' => 'form-control select-category']) }}
 </div> 
 <div class="form-group">
     {{ Form::label('name', 'Nombre de la etiqueta') }}
@@ -25,7 +25,8 @@
 		{{ Form::radio('status', 'DRAFT') }} Borrador
 	</label>
 </div>
-<div class="form-group">
+{{--
+	<div class="form-group">
 	{{ Form::label('tags', 'Etiquetas') }}
 	<div>
 	@foreach($tags as $tag)
@@ -35,6 +36,13 @@
 	@endforeach
 	</div>
 </div>
+	
+--}}
+<div class="form-group">
+	{!! Form::label('tags', 'Tags') !!}
+	{!! Form::select('tags[]', $tags, null, ['class' => 'form-control select-tag', 'multiple', 'riquired']) !!}
+</div>
+
 <div class="form-group">
     {{ Form::label('excerpt', 'Extracto') }}
     {{ Form::textarea('excerpt', null, ['class' => 'form-control', 'rows' => '2']) }}
@@ -59,10 +67,23 @@
 	        }
 	    });
 
-	    CKEDITOR.config.height = 400;
+	    CKEDITOR.config.height = 200;
 		CKEDITOR.config.width  = 'auto';
 
 		CKEDITOR.replace('body');
+	});
+	$('.select-category').chosen({
+		width: "90%",
+		no_results_text: "No se encontro la Categoria: ",
+		single_backstroke_delete : true,
+		allow_single_deselect: true,
+		search_contains: true
+	});
+	$('.select-tag').chosen({
+		placeholder_text_multiple: 'Seleccione un maximo de 3 tags',
+		max_selected_options: 3,
+		search_contains: true,
+		no_results_text: 'No se encontraron estos tags'
 	});
 </script>
 @endsection

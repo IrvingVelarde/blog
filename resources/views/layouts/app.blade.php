@@ -15,7 +15,8 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('chosen/chosen.css') }}">
     <link href="{{ asset('fontawesome-5.0.9/web-fonts-with-css/css/fontawesome-all.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.css">
+    
 </head>
 <body>
     <div id="app">
@@ -89,6 +90,7 @@
     <script src="{{ asset('vendor/stringToSlug/jquery.stringToSlug.min.js') }}"></script>
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('chosen/chosen.jquery.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.jquery.js"></script>
     @yield('scripts')
     //@yield('js')
 </body>
