@@ -7,8 +7,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <?php
-                        echo "Ver Post: ".  "<b>" .$post->name. "</b>";
+                        
                     ?>
+                    @php
+                        echo "Ver Post: ".  "<b>" .$post->name. "</b>";
+                    @endphp
+
                 </div>
                 <div class="panel-body">
                     <p><strong>Nombre</strong> {{ $post->name }}</p>                    

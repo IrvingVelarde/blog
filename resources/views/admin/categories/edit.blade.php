@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <?php
+                <div class="panel-heading"> 
+                    @php
                         echo "Editar Categoria: ".  "<b>" .$categories->name. "</b>";
-                    ?>    
+                    @endphp   
                 </div>
                 <div class="panel-body">
                     {!! Form::model($categories, ['route' => ['categories.update', $categories->id], 'method' => 'PUT']) !!}
