@@ -10,7 +10,7 @@ use App\category;
 class PageController extends Controller
 {
     public function blog(){
-    	$posts = Post::orderBy('id','DESC')->where('status','PUBLISHED')->paginate(3);
+    	$posts = Post::orderBy('id','DESC')->where('status','PUBLISHED')->paginate(8);
     	//return 'Hola este es el controllador principal';
     	return view('web.posts',compact('posts'));
 	}

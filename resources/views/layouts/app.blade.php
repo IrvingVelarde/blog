@@ -86,10 +86,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('jquery/jquery-3.3.1.js') }}"></script>
     <script src="{{ asset('vendor/chosen/chosen.jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/stringToSlug/jquery.stringToSlug.min.js') }}"></script>
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('vendor/pinterest/pinterest_grid.js') }}"></script>
     {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.5/chosen.jquery.js"></script> --}}
     @yield('scripts')
 </body>
