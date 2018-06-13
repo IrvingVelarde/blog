@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<h2 align="center">Lista de Articulos</h2>
+<h2 align="center" class="title">Lista de Articulos</h2>
 <div class="container">
 	<div id="pinterest">
 		@foreach($posts as $post)
 		<div class="panel panel-default white-panel">
 			<div class="panel-heading">
-				<b>{{ $post->name }}</b>
+				<b class="title">{{ $post->name }}</b>
 			</div>
 			<div class="panel-body">
 				@if($post->file)
