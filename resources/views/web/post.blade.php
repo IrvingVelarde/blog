@@ -7,7 +7,9 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				Categoria
-				<a href="{{ route('category',$post->category->slug) }}">{{ $post->category->name }}</a>
+				<a href="{{ route('category',$post->category->slug) }}">
+					<span class="label label-info">{{ $post->category->name }}</span>
+				</a>
 			</div>
 			<div class="panel-body">
 				@if($post->file)
@@ -19,7 +21,9 @@
 				<hr>
 				Etiquetas
 				@foreach($post->tags as $tag)
-				<a href="{{ route('tag',$tag->slug) }}">{{ $tag->name }}</a>
+				<a href="{{ route('tag',$tag->slug) }}">
+					<span id="tag" class="label label-primary">{{ $tag->name }}</span>
+				</a>
 				@endforeach
 			</div>
 		</div>

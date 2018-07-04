@@ -49,8 +49,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li @if(request()->is('login')) class="active" @endif><a href="{{ route('login') }}">Login</a></li>
+                            <li @if(request()->is('register')) class="active" @endif><a href="{{ route('register') }}">Register</a></li>
                         @else
                         <li @if(request()->is('tags')) class="active" @endif><a href="{{ route('tags.index') }}">Etiquetas</a></li>
                         <li @if(request()->is('categories')) class="active" @endif><a href="{{ route('categories.index') }}">Categorias</a></li>
